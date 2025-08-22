@@ -29,7 +29,6 @@ import java.util.concurrent.locks.Lock;
  *   - clients within the same session can lock/unlock; this includes two distinct threads within the same client application
  *   - if a client holding a lock dies, the session is cleared and locks automatically released
  * - lineariazbility is guaranteed via RAFT so under load mutual exclusion is guaranteed
- * this works also between two hazelcast clients connected to the same
  *
  * two threads in the same client application belong to the same session so it's the app's responsibility to correcly program locks/unlocks
  *
