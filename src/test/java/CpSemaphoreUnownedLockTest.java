@@ -3,6 +3,7 @@ import com.hazelcast.config.cp.CPSubsystemConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.voghbum.CpBasedUnownedLock;
+import com.voghbum.CpSemaphoreUnownedLock;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CpBasedUnownedLockTest {
+public class CpSemaphoreUnownedLockTest {
     private static HazelcastInstance hz1,  hz2, hz3;
     private static final String LICENSE = System.getenv("HZ_LICENSEKEY");
     private static final String LOCK_NAME = "test-lock";
@@ -46,7 +47,7 @@ public class CpBasedUnownedLockTest {
 
     @Test
     void shouldUnlockAnotherThreadCorrectly() throws InterruptedException {
-        var lock = new CpBasedUnownedLock(hz1, LOCK_NAME);
+        var lock = new CpSemaphoreUnownedLock(hz1, LOCK_NAME);
         int threadCount = 100;
         int taskCount = 500;
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
@@ -86,7 +87,7 @@ public class CpBasedUnownedLockTest {
 
     @Test
     void shouldReleaseTheLockSameThread() throws InterruptedException {
-        var lock = new CpBasedUnownedLock(hz1, LOCK_NAME);
+        var lock = new CpSemaphoreUnownedLock(hz2, LOCK_NAME);
         int threadCount = 100;
         int taskCount = 500;
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
